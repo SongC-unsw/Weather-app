@@ -28,7 +28,9 @@ export default function CurrentWeather({ location }: Props) {
         <div>
           <p>Current Country: {weatherData.sys.country}</p>
           <p>Current City: {weatherData.name}</p>
-          <p>Current Temperature: {weatherData.main.temp}</p>
+          <p>
+            Current Temperature: {(weatherData.main.temp - 273.15).toFixed(1)}°C{" "}
+          </p>
           <p>Current Weather: {weatherData.weather[0].main}</p>
         </div>
       )}
