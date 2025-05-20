@@ -13,7 +13,7 @@ export default function Home() {
     latitude: number;
     longitude: number;
   }>(defaultCoordinates);
-  const [error, setError] = useState<string | null>(null);
+  const [_error, setError] = useState<string | null>(null);
 
   const handleLocation = () => {
     if (navigator.geolocation) {
