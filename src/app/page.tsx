@@ -13,7 +13,6 @@ export default function Home() {
     latitude: number;
     longitude: number;
   }>(defaultCoordinates);
-  const [_error, setError] = useState<string | null>(null);
 
   const handleLocation = () => {
     if (navigator.geolocation) {
@@ -25,12 +24,9 @@ export default function Home() {
           });
         },
         (error) => {
-          setError(error.message);
           console.log(error);
         }
       );
-    } else {
-      setError("Cant get location");
     }
   };
 
