@@ -1,11 +1,17 @@
 "use client";
 import GetLocationBtn from "./components/getLocation";
 import { useState } from "react";
+import CurrentWeather from "./components/currentWeather";
+
 export default function Home() {
+  const defaultCoordinates = {
+    latitude: 35.6764,
+    longitude: 139.65,
+  };
   const [coordinates, setCoordinates] = useState<{
     latitude: number;
     longitude: number;
-  } | null>(null);
+  }>(defaultCoordinates);
   const [error, setError] = useState<string | null>(null);
 
   const handleLocation = () => {
@@ -29,6 +35,7 @@ export default function Home() {
   return (
     <div className="flex flex-col items-center justify-center h-screen">
       <GetLocationBtn onHandleLocation={handleLocation} />
+      <CurrentWeather location={coordinates} />
     </div>
   );
 }
