@@ -32,7 +32,7 @@ export default function Home() {
 
   const handleCheckWeather = async (location: string) => {
     const response = await axios.get(
-      `http://api.openweathermap.org/geo/1.0/direct?q=${location}&limit=5&appid=${process.env.NEXT_PUBLIC_OPENWEATHER_API_KEY}`
+      `https://api.openweathermap.org/geo/1.0/direct?q=${location}&limit=5&appid=${process.env.NEXT_PUBLIC_OPENWEATHER_API_KEY}`
     ); //geocoding api
     setCoordinates({
       latitude: response.data[0].lat,
