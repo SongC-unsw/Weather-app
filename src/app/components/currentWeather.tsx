@@ -10,7 +10,8 @@ type Props = {
 export default function CurrentWeather({ location }: Props) {
   const [weatherData, setWeatherData] = useState<any>(null);
 
-  useEffect(() => {
+  // 定义获取天气数据的函数
+  const fetchWeatherData = () => {
     const apiKey = process.env.NEXT_PUBLIC_OPENWEATHER_API_KEY;
     axios
       .get(
@@ -18,8 +19,25 @@ export default function CurrentWeather({ location }: Props) {
       )
       .then((res) => {
         setWeatherData(res.data);
-        console.log(res.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching weather data:", error);
       });
+  };
+
+  useEffect(() => {
+    // 立即获取一次数据
+    fetchWeatherData();
+
+    // 设置每10分钟轮询一次
+    const intervalId = setInterval(() => {
+      fetchWeatherData();
+    }, 10 * 60 * 1000); // 10分钟 = 10 * 60 * 1000毫秒
+
+    // 清理函数，组件卸载时清除定时器
+    return () => {
+      clearInterval(intervalId);
+    };
   }, [location.latitude, location.longitude]);
 
   return (
@@ -29,9 +47,7 @@ export default function CurrentWeather({ location }: Props) {
         <div>
           <p>Current Country: {weatherData.sys.country}</p>
           <p>Current City: {weatherData.name}</p>
-          <p>
-            Current Temperature: {(weatherData.main.temp - 273.15).toFixed(1)}°C{" "}
-          </p>
+          <p>Current Temperature: {(weatherData.main.temp - 273.15).toFixed(1)}°C </p>
           <p>Current Weather: {weatherData.weather[0].main}</p>
         </div>
       )}
