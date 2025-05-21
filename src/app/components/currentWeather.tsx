@@ -5,9 +5,10 @@ import { useState, useEffect } from "react";
 
 type Props = {
   location: { latitude: number; longitude: number };
+  onGetWeather: (weatherData: string) => void;
 };
 
-export default function CurrentWeather({ location }: Props) {
+export default function CurrentWeather({ location, onGetWeather }: Props) {
   const [weatherData, setWeatherData] = useState<any>(null);
 
   // 定义获取天气数据的函数
@@ -19,6 +20,7 @@ export default function CurrentWeather({ location }: Props) {
       )
       .then((res) => {
         setWeatherData(res.data);
+        onGetWeather(res.data.weather[0].main);
       })
       .catch((error) => {
         console.error("Error fetching weather data:", error);
@@ -47,7 +49,9 @@ export default function CurrentWeather({ location }: Props) {
         <div>
           <p>Current Country: {weatherData.sys.country}</p>
           <p>Current City: {weatherData.name}</p>
-          <p>Current Temperature: {(weatherData.main.temp - 273.15).toFixed(1)}°C </p>
+          <p>
+            Current Temperature: {(weatherData.main.temp - 273.15).toFixed(1)}°C{" "}
+          </p>
           <p>Current Weather: {weatherData.weather[0].main}</p>
         </div>
       )}

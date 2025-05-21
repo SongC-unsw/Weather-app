@@ -14,6 +14,7 @@ export default function Home() {
     longitude: number;
   }>(defaultCoordinates);
 
+  const [weather, setWeather] = useState<string>("");
   const handleLocation = () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
@@ -39,11 +40,21 @@ export default function Home() {
       longitude: response.data[0].lon,
     });
   };
+  const onGetWeather = (weatherData: string) => {
+    setWeather(weatherData);
+  };
+
+  const backgroundImage = weather
+    ? `/weather-cover-image/${weather}.jpg`
+    : "/weather-cover-image/default.jpg";
 
   return (
-    <div className="flex flex-col gap-5 items-center justify-center h-screen">
+    <div
+      className="flex flex-col gap-5 items-center justify-center h-screen bg-cover bg-center"
+      style={{ backgroundImage: `url('${backgroundImage}')` }}
+    >
       <GetLocationBtn onHandleLocation={handleLocation} />
-      <CurrentWeather location={coordinates} />
+      <CurrentWeather location={coordinates} onGetWeather={onGetWeather} />
       <CountryInput onHandleCheckWeather={handleCheckWeather} />
     </div>
   );
