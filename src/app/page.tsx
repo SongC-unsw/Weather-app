@@ -6,6 +6,7 @@ import CountryInput from "./components/countryInput";
 import axios from "axios";
 import ShowWeatherIcon from "./components/showWeatherIcon";
 import CurrentTemp from "./components/currentTemp";
+import CurrentLocation from "./components/currentLocation";
 export default function Home() {
   const defaultCoordinates = {
     latitude: 35.6764,
@@ -58,14 +59,21 @@ export default function Home() {
       className="flex items-center justify-center min-h-screen bg-cover bg-center bg-white/50 backdrop-blur-sm"
       style={{ backgroundImage: `url('${backgroundImage}')` }}
     >
+      <CurrentWeather location={coordinates} onGetWeather={onGetWeather} />
       <div className="flex flex-col gap-5 items-center justify-center rounded-xl shadow-lg bg-purple-500 p-10 w-[700px] text-white text-center font-bold">
         <div className="flex gap-5 items-center justify-center">
           <CountryInput onHandleCheckWeather={handleCheckWeather} />
           <GetLocationBtn onHandleLocation={handleLocation} />
         </div>
-        <ShowWeatherIcon weather={weather} weatherCode={weatherCode} />
-        <CurrentWeather location={coordinates} onGetWeather={onGetWeather} />
-        <CurrentTemp temp={weather?.main?.temp} />
+        <div className="flex flex-col gap-5 items-center justify-center">
+          <div className="flex items-center gap-2">
+            <ShowWeatherIcon weather={weather} weatherCode={weatherCode} />
+            <CurrentTemp temp={weather?.main?.temp} />
+          </div>
+          <div className="flex gap-2">
+            <CurrentLocation location={weather?.name} />
+          </div>
+        </div>
       </div>
     </div>
   );
