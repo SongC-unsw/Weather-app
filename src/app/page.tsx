@@ -16,7 +16,7 @@ export default function Home() {
     longitude: number;
   }>(defaultCoordinates);
 
-  const [weather, setWeather] = useState<string>("");
+  const [weather, setWeather] = useState<any>(null);
   const [weatherCode, setWeatherCode] = useState<string>("");
 
   const handleLocation = () => {
