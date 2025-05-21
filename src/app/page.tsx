@@ -5,6 +5,7 @@ import CurrentWeather from "./components/currentWeather";
 import CountryInput from "./components/countryInput";
 import axios from "axios";
 import ShowWeatherIcon from "./components/showWeatherIcon";
+import CurrentTemp from "./components/currentTemp";
 export default function Home() {
   const defaultCoordinates = {
     latitude: 35.6764,
@@ -17,6 +18,7 @@ export default function Home() {
 
   const [weather, setWeather] = useState<string>("");
   const [weatherCode, setWeatherCode] = useState<string>("");
+
   const handleLocation = () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
@@ -42,13 +44,13 @@ export default function Home() {
       longitude: response.data[0].lon,
     });
   };
-  const onGetWeather = (weatherData: string, weatherCode: string) => {
+  const onGetWeather = (weatherData: any) => {
     setWeather(weatherData);
-    setWeatherCode(weatherCode);
+    setWeatherCode(weatherData.weather[0].icon);
   };
 
   const backgroundImage = weather
-    ? `/weather-cover-image/${weather}.jpg`
+    ? `/weather-cover-image/${weather.weather[0].main}.jpg`
     : "/weather-cover-image/default.jpg";
 
   return (
@@ -63,6 +65,7 @@ export default function Home() {
         </div>
         <ShowWeatherIcon weather={weather} weatherCode={weatherCode} />
         <CurrentWeather location={coordinates} onGetWeather={onGetWeather} />
+        <CurrentTemp temp={weather?.main?.temp} />
       </div>
     </div>
   );

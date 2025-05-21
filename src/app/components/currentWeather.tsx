@@ -1,16 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import axios from "axios";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 
 type Props = {
   location: { latitude: number; longitude: number };
-  onGetWeather: (weatherData: string, weatherCode: string) => void;
+  onGetWeather: (weatherData: any) => void;
 };
 
 export default function CurrentWeather({ location, onGetWeather }: Props) {
-  const [weatherData, setWeatherData] = useState<any>(null);
-
   // 定义获取天气数据的函数
   const fetchWeatherData = () => {
     const apiKey = process.env.NEXT_PUBLIC_OPENWEATHER_API_KEY;
@@ -19,8 +17,7 @@ export default function CurrentWeather({ location, onGetWeather }: Props) {
         `https://api.openweathermap.org/data/2.5/weather?lat=${location.latitude}&lon=${location.longitude}&appid=${apiKey}`
       )
       .then((res) => {
-        setWeatherData(res.data);
-        onGetWeather(res.data.weather[0].main, res.data.weather[0].icon);
+        onGetWeather(res.data);
       })
       .catch((error) => {
         console.error("Error fetching weather data:", error);
@@ -43,18 +40,5 @@ export default function CurrentWeather({ location, onGetWeather }: Props) {
     };
   }, [location.latitude, location.longitude]);
 
-  return (
-    <div>
-      {weatherData && weatherData.weather && weatherData.weather.length > 0 && (
-        <div>
-          <p>Current Country: {weatherData.sys.country}</p>
-          <p>Current City: {weatherData.name}</p>
-          <p>
-            Current Temperature: {(weatherData.main.temp - 273.15).toFixed(1)}°C{" "}
-          </p>
-          <p>Current Weather: {weatherData.weather[0].main}</p>
-        </div>
-      )}
-    </div>
-  );
+  return null;
 }
