@@ -56,7 +56,7 @@ export default function Home() {
       className="flex items-center justify-center min-h-screen bg-cover bg-center bg-white/50 backdrop-blur-sm"
       style={{ backgroundImage: `url('${backgroundImage}')` }}
     >
-      <div className="flex flex-col gap-5 items-center justify-center rounded-xl shadow-lg bg-white/80 p-10 w-[700px]">
+      <div className="flex flex-col gap-5 items-center justify-center rounded-xl shadow-lg bg-purple-500 p-10 w-[700px] text-white text-center font-bold">
         <div className="flex gap-5 items-center justify-center">
           <CountryInput onHandleCheckWeather={handleCheckWeather} />
           <GetLocationBtn onHandleLocation={handleLocation} />

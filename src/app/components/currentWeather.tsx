@@ -45,7 +45,6 @@ export default function CurrentWeather({ location, onGetWeather }: Props) {
 
   return (
     <div>
-      <h1>Current Weather</h1>
       {weatherData && weatherData.weather && weatherData.weather.length > 0 && (
         <div>
           <p>Current Country: {weatherData.sys.country}</p>
