@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 
 type Props = {
   location: { latitude: number; longitude: number };
-  onGetWeather: (weatherData: string) => void;
+  onGetWeather: (weatherData: string, weatherCode: string) => void;
 };
 
 export default function CurrentWeather({ location, onGetWeather }: Props) {
@@ -20,10 +20,11 @@ export default function CurrentWeather({ location, onGetWeather }: Props) {
       )
       .then((res) => {
         setWeatherData(res.data);
-        onGetWeather(res.data.weather[0].main);
+        onGetWeather(res.data.weather[0].main, res.data.weather[0].icon);
       })
       .catch((error) => {
         console.error("Error fetching weather data:", error);
+        alert("Error fetching weather data");
       });
   };
 
@@ -34,7 +35,7 @@ export default function CurrentWeather({ location, onGetWeather }: Props) {
     // 设置每10分钟轮询一次
     const intervalId = setInterval(() => {
       fetchWeatherData();
-    }, 10 * 60 * 1000); // 10分钟 = 10 * 60 * 1000毫秒
+    }, 60 * 1000);
 
     // 清理函数，组件卸载时清除定时器
     return () => {

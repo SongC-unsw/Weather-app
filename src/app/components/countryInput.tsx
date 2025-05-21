@@ -32,14 +32,6 @@ export default function CountryInput({ onHandleCheckWeather }: Props) {
       >
         Check Weather
       </Button>
-      <Button
-        type="button"
-        variant="outline"
-        className="border-red-500 text-red-500 hover:bg-red-50"
-        onClick={() => setLocation("")}
-      >
-        Clear
-      </Button>
     </form>
   );
 }

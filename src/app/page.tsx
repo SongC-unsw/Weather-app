@@ -4,6 +4,7 @@ import { useState } from "react";
 import CurrentWeather from "./components/currentWeather";
 import CountryInput from "./components/countryInput";
 import axios from "axios";
+import ShowWeatherIcon from "./components/showWeatherIcon";
 export default function Home() {
   const defaultCoordinates = {
     latitude: 35.6764,
@@ -15,6 +16,7 @@ export default function Home() {
   }>(defaultCoordinates);
 
   const [weather, setWeather] = useState<string>("");
+  const [weatherCode, setWeatherCode] = useState<string>("");
   const handleLocation = () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
@@ -40,8 +42,9 @@ export default function Home() {
       longitude: response.data[0].lon,
     });
   };
-  const onGetWeather = (weatherData: string) => {
+  const onGetWeather = (weatherData: string, weatherCode: string) => {
     setWeather(weatherData);
+    setWeatherCode(weatherCode);
   };
 
   const backgroundImage = weather
@@ -58,6 +61,7 @@ export default function Home() {
           <CountryInput onHandleCheckWeather={handleCheckWeather} />
           <GetLocationBtn onHandleLocation={handleLocation} />
         </div>
+        <ShowWeatherIcon weather={weather} weatherCode={weatherCode} />
         <CurrentWeather location={coordinates} onGetWeather={onGetWeather} />
       </div>
     </div>
